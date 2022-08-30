@@ -7,8 +7,6 @@ import math
 import matplotlib.pyplot as plt
 import matplotlib as mpl
 
-final_obstacles = None
-
 def calc_distance(p_1, p_2):
     return math.sqrt((p_2[0]-p_1[0])**2 + (p_2[1]-p_1[1])**2)
 
@@ -141,6 +139,7 @@ class planner():
     
 def callback(data):
     #rospy.loginfo(data.data)
+    print('test')
 
     published_data = data.data
     obstacles = []
@@ -150,8 +149,6 @@ def callback(data):
         else:
             continue
     
-    final_obstacles = obstacles
-    print (final_obstacles)
     
     print(obstacles)
     plan = planner(obstacles)
@@ -174,11 +171,13 @@ def listener():
     # run simultaneously.
     rospy.init_node('listener', anonymous=True)
 
-    rospy.Subscriber('obstacle_detector',Float32MultiArray, callback)
-
+    #rospy.Subscriber('obstacle_detector',Float32MultiArray, callback)
+    data = rospy.wait_for_message('obstacle_detector', Float32MultiArray, timeout=None)
+    callback(data)
     # spin() simply keeps python from exiting until this node is stopped
-    # rospy.spin()
+    rospy.spin()
+
 
 if __name__ == '__main__':
     listener()
-    print(final_obstacles)
+    
