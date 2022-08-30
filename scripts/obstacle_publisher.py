@@ -5,7 +5,7 @@ from std_msgs.msg import Float32MultiArray
 def talker():
     pub = rospy.Publisher('obstacle_detector', Float32MultiArray, queue_size=10)
     rospy.init_node('talker', anonymous=True)
-    rate = rospy.Rate(1) # 10hz
+    rate = rospy.Rate(1) # 1hz
     while not rospy.is_shutdown():
         #hello_str = "hello world %s" % rospy.get_time()
         obstacles = [0, 1.5, 0, 3, 0, 4.5, 
