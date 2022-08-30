@@ -137,6 +137,8 @@ class planner():
                 self.path_segments.insert(0, (j[1], current[1]))
                 current = j
 
+
+    
 def callback(data):
     #rospy.loginfo(data.data)
 
@@ -175,7 +177,8 @@ def listener():
     rospy.Subscriber('obstacle_detector',Float32MultiArray, callback)
 
     # spin() simply keeps python from exiting until this node is stopped
-    rospy.spin()
+    # rospy.spin()
 
 if __name__ == '__main__':
     listener()
+    print(final_obstacles)
