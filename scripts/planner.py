@@ -38,6 +38,7 @@ class planner():
         self.nodes_list = [['q0', self.start, 'None']]
         self.segments_list = []
         self.path_nodes, self.path_segments = [], []
+        self.publishing_data = []
 
     def obstacle_check(self, current):
         for pos in self.obstacles:
@@ -85,7 +86,7 @@ class planner():
                 continue
             else:
                 valid_point = True
-                print(new_node)
+                
         
         self.nodes_list.append([node_name, new_node, parent[0]])
         self.segments_list.append([parent[1], new_node])
@@ -139,7 +140,7 @@ class planner():
     
 def callback(data):
     #rospy.loginfo(data.data)
-    print('test')
+    
 
     published_data = data.data
     obstacles = []
@@ -149,17 +150,19 @@ def callback(data):
         else:
             continue
     
-    
-    print(obstacles)
+
     plan = planner(obstacles)
     plan.tree_generator()
     plan.path_finder()
     
     path_nodes = plan.path_nodes
     path_segments = plan.path_segments
-    print(path_nodes)
-
     
+    for point in path_nodes:
+        plan.publishing_data.append(point[0])
+        plan.publishing_data.append(point[1])
+
+    print(plan.publishing_data)
     
     
 def listener():
