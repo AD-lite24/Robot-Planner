@@ -164,7 +164,16 @@ def callback(data):
 
     print(plan.publishing_data)
     
-    
+    pub = rospy.Publisher('path', Float32MultiArray, queue_size=10)
+    rate = rospy.Rate(1)
+
+    while not rospy.is_shutdown():
+        path = plan.publishing_data
+        path_publishing = Float32MultiArray(data = path)
+        rospy.loginfo(path_publishing)
+        pub.publish(path_publishing)
+        rate.sleep()
+
 def listener():
 
     # In ROS, nodes are uniquely named. If two nodes with the same
