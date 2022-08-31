@@ -96,18 +96,23 @@ class controller():
             to_move_node = self.path[point_idx + 1]
             prev_node = self.path[point_idx - 1]
 
-            self.translate(current_node, to_move_node)
-            print('Reached point ', self.current_pos)
             self.rotate(calculate_angle(prev_node, current_node, to_move_node))
             print('Rotated angle ', calculate_angle(prev_node, current_node, to_move_node))
+
+            self.translate(current_node, to_move_node)
+            print('Reached point ', self.current_pos)
             point_idx = point_idx + 1
 
-            if self.current_pos == (6,6):
+            # if self.current_pos == (6,6):
+            #     print('Bot has reached the goal')
+            #     reached = True
+
+            if point_idx == self.num_of_points - 1:
                 print('Bot has reached the goal')
                 reached = True
-
-            else: 
+            else:
                 continue
+
 
 def callback(data):
     published_data = data.data
