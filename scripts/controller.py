@@ -1,4 +1,4 @@
-from subprocess import list2cmdline
+#!/usr/bin/env python
 import rospy
 from std_msgs.msg import Float32MultiArray
 import math
@@ -60,6 +60,8 @@ class controller():
         while rospy.Time.now() < now + rospy.Duration.from_sec(time_required_to_translate):
             pub.publish(move_cmd)
             rate.sleep()
+        
+        print('translated distance: ', calc_distance(p_a, p_b))
 
     def rotate(self, angle):
         self.rotating = True
@@ -75,6 +77,8 @@ class controller():
         while rospy.Time.now() < now + rospy.Duration.from_sec(time_required_to_rotate):
             pub.publish(move_cmd)
             rate.sleep()
+        
+        print('rotated angle: ', angle)
 
     def position_getter(self):
         pass
@@ -97,10 +101,9 @@ class controller():
             prev_node = self.path[point_idx - 1]
 
             self.rotate(calculate_angle(prev_node, current_node, to_move_node))
-            print('Rotated angle ', calculate_angle(prev_node, current_node, to_move_node))
-
+            
             self.translate(current_node, to_move_node)
-            print('Reached point ', self.current_pos)
+            
             point_idx = point_idx + 1
 
             # if self.current_pos == (6,6):
@@ -122,7 +125,9 @@ def callback(data):
             path_nodes.append((published_data[i], published_data[i+1]))
         else:
             continue
-    
+    print(path_nodes)
+    control = controller(path_nodes)
+    control.mover()
 
 
 
@@ -130,6 +135,7 @@ def callback(data):
 def listener():
     rospy.init_node('controller', anonymous=True)
     data = rospy.wait_for_message('path', Float32MultiArray, timeout=None)
+    callback(data)
     rospy.spin()
 
 if __name__ == '__main__':
