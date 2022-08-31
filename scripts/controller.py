@@ -22,7 +22,7 @@ def calculate_angle(p_1, p_2, p_3):
     angle_2 = math.atan((p_3[1]-p_2[1])/(p_3[0]-p_2[0]))
 
     # return (angle_1 - angle_2)*180/math.pi
-    return (angle_1 - angle_2)
+    return math.pi/2 - (angle_1 - angle_2)
 
 def get_sign(num):
     if num > 0:
@@ -88,6 +88,7 @@ class controller():
         #To move from (0,0) to first point 
 
         first_angle = math.atan(self.path[1][1]/self.path[1][0])
+        print(first_angle)
         self.rotate(first_angle)
         self.translate((0,0), self.path[1])
         
