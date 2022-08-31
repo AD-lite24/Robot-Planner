@@ -100,6 +100,7 @@ class controller():
             print('Reached point ', self.current_pos)
             self.rotate(calculate_angle(prev_node, current_node, to_move_node))
             print('Rotated angle ', calculate_angle(prev_node, current_node, to_move_node))
+            point_idx = point_idx + 1
 
             if self.current_pos == (6,6):
                 print('Bot has reached the goal')
