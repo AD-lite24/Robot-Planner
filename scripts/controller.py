@@ -84,65 +84,9 @@ class controller():
         ox, oy, oz, ow = data.pose.pose.orientation.x, data.pose.pose.orientation.y, data.pose.pose.orientation.z, data.pose.pose.orientation.w
         self.current_orient = quat_2_euler(ox, oy, oz, ow)*180/math.pi
 
-
-    # def translate(self, p_a, p_b):
-    #     self.translating = True
-    #     time_required_to_translate = calc_distance(p_a, p_b)/self.trans_speed
-
-    #     self.error = calc_distance(self.current_pos, p_b)
-
-
-    #     pub = rospy.Publisher('cmd_vel', Twist, queue_size=10)
-    #     move_cmd = Twist()
-    #     move_cmd.linear.x = self.trans_speed
-    #     now = rospy.Time.now()
-    #     rate = rospy.Rate(100)
-
-    #     #Move bot for required amount of time
-    #     while rospy.Time.now() < now + rospy.Duration.from_sec(time_required_to_translate):
-    #         pub.publish(move_cmd)
-    #         rate.sleep()
-        
-
-    #     print('translated distance: ', calc_distance(p_a, p_b))
-    #     print('current pos: ', self.current_pos, ' expected pos: ', p_b)
-    
-    # def stop(self):
-    #     pub = rospy.Publisher('cmd_vel', Twist, queue_size=10)
-    #     move_cmd = Twist()
-    #     move_cmd.linear.x = 0
-
-    # def rotate(self, angle):
-    #     self.rotating = True
-    #     time_required_to_rotate = (angle)/self.rot_speed
-    #     prev = self.current_orient
-
-    #     pub = rospy.Publisher('cmd_vel', Twist, queue_size=10)
-    #     move_cmd = Twist()
-    #     move_cmd.angular.z = self.rot_speed*get_sign(angle)
-    #     now = rospy.Time.now()
-    #     rate = rospy.Rate(100)
-    #     print('time: ', time_required_to_rotate)
-
-    #     #Rotate bot for required amount of time
-    #     while rospy.Time.now() < now + rospy.Duration.from_sec(time_required_to_rotate):
-    #         print(move_cmd)
-    #         pub.publish(move_cmd)
-    #         rate.sleep()
-        
-    #     print('expected rotation: ', angle*180/math.pi, ' actual rotation: ', self.current_orient - prev)
-
-    
-
     def mover(self):
         print('number of nodes: ', len(self.path))
-        #To move from (0,0) to first point 
-
-        # first_angle = math.atan(self.path[1][1]/self.path[1][0])
-        # print(first_angle)
-        # self.rotate(first_angle)
-        # self.translate((0,0), self.path[1])
-        
+        #To move from (0,0) to first point         
         #Traversing rest of the path
         reached = False
         point_idx = 0
